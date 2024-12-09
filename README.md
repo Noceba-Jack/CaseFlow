@@ -25,7 +25,7 @@ To set up and run the Case Management System locally, follow these steps:
 - Visual Studio Community 2019
 
 ## Project Status
-This project is currently in the initial development stage. Further improvements and additional features may be added in the future.
+This project is currently in the initial development stage. Further improvements and additional features will be added in the future.
 
 ## Contributing
 This is a solo project and contributions are not being accepted at this time.
