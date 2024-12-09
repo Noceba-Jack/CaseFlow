@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<CCaseInfoContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <investigatingOfficer>
+    <string>James Dean</string>
+  </investigatingOfficer>
+  <chargeType>
+    <string>Assault</string>
+  </chargeType>
+  <postponementReason>
+    <string>Evidence</string>
+  </postponementReason>
+  <accused>
+    <string>Tom McDonald</string>
+  </accused>
+  <isCompleted />
+  <caseNumber>
+    <string>12345</string>
+  </caseNumber>
+  <MASNumber>
+    <string>54321</string>
+  </MASNumber>
+  <firstAppearanceDate>
+    <string>11/1/2024</string>
+  </firstAppearanceDate>
+  <postponementDate>
+    <string>12/9/2024</string>
+  </postponementDate>
+</CCaseInfoContainer>
