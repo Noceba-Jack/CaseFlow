@@ -1,7 +1,7 @@
 # CaseFlow: A Prosecutor's Case Management Tool
 
 ## Overview
-The Case Management System is a console-based application designed to help prosecutors manage case information and court dates more efficiently. This project was developed to transition from a manual, paper-based system to a digital solution. It allows users to upload cases, manage postponement dates, view daily court cases, search through cases, and track older and completed cases.
+The Case Management System is an application designed to help prosecutors manage case information and court dates more efficiently. This project was developed to transition from a manual, paper-based system to a digital solution. It allows users to upload cases, manage postponement dates, view daily court cases, search through cases, and track older and completed cases.
 
 ## Features
 - **Add Cases:** Easily add new cases with details such as case number, defendant name, charges, and court dates.
