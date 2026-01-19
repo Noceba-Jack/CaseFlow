@@ -12,3 +12,17 @@ C:\C# files\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.exe
 C:\C# files\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.pdb
 C:\C# files\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.AddCase.resources
 C:\C# files\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.ShowCases.resources
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\bin\Debug\CaseFlowUI.exe.config
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\bin\Debug\CaseFlowUI.exe
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\bin\Debug\CaseFlowUI.pdb
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\bin\Debug\FontAwesome.Sharp.dll
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.csproj.AssemblyReference.cache
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.AddCase.resources
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.CaseFlow.resources
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.Properties.Resources.resources
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.ShowCases.resources
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.csproj.GenerateResource.cache
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.csproj.CoreCompileInputs.cache
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.csproj.CopyComplete
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.exe
+C:\Users\jackn\Source\Repos\Noceba-Jack\CaseFlow\CaseFlowUI\CaseFlowUI\obj\Debug\CaseFlowUI.pdb
