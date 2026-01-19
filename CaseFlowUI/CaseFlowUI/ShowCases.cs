@@ -33,16 +33,24 @@ namespace CaseFlowUI
             //connection string
             string connectionString = @"Data Source=LAPTOP-G9D69D5J\MSSQLSERVER01;Initial Catalog=CaseFlow;Integrated Security=True";
 
-            string sql = "Select * from accused";
-
+            //establish the connection
             SqlConnection connection = new SqlConnection(connectionString);
 
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, connection);
-            DataSet dataSet = new DataSet();
+            //create the command
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "DisplayCases";
+            command.CommandType = CommandType.StoredProcedure;
+
+            //execute command
             connection.Open();
+            //using data adapter because user needs to navigate the data and also data needs to be plugged into a datagridview
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+            DataSet dataSet = new DataSet();
             dataAdapter.Fill(dataSet);
             connection.Close();
 
+            //input data to datagridview
             dgvCaseInformation.DataSource = dataSet.Tables[0];
         }
 
