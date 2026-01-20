@@ -9,55 +9,102 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.IO;
+using System.Data.SqlClient;
 
 namespace CaseFlowUI
 {
     public partial class AddCase : Form
     {
         //declare case info object
-        CCaseInfoContainer cCaseInfo = new CCaseInfoContainer();
+        //CCaseInfoContainer cCaseInfo = new CCaseInfoContainer();
         public AddCase()
         {
             InitializeComponent();
         }//constructor
-
+        
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            //ensure that all fields are filled in before saving the information
-            if (txtCaseNumber.Text != null || txtAccused.Text != null || txtCharge != null || txtIO != null || txtMASNumber != null || txtPostponementReason != null)
+            try
             {
-                //initialise instances of the lists;
-                cCaseInfo.isCompleted = new List<string>();
-                cCaseInfo.caseNumber = new List<string>();
-                cCaseInfo.MASNumber = new List<string>();
-                cCaseInfo.accused = new List<string>();
-                cCaseInfo.chargeType = new List<string>();
-                cCaseInfo.investigatingOfficer = new List<string>();
-                cCaseInfo.postponementReason = new List<string>();
-                cCaseInfo.firstAppearanceDate = new List<string>();
-                cCaseInfo.postponementDate = new List<string>();
+                //connection string
+                string connectionString = @"Data Source=LAPTOP-G9D69D5J\MSSQLSERVER01;Initial Catalog=CaseFlow;Integrated Security=True";
 
-                //collect case information from the form and allocate it to corresponding list
-                cCaseInfo.caseNumber.Add(txtCaseNumber.Text);
-                cCaseInfo.MASNumber.Add(txtMASNumber.Text);
-                cCaseInfo.accused.Add(txtAccused.Text);
-                cCaseInfo.chargeType.Add(txtCharge.Text);
-                cCaseInfo.investigatingOfficer.Add(txtIO.Text);
-                cCaseInfo.postponementReason.Add(txtPostponementReason.Text);
-                cCaseInfo.firstAppearanceDate.Add(dtpFirstAppearnce.Value.ToShortDateString());
-                cCaseInfo.postponementDate.Add(dtpPostponement.Value.ToShortDateString());
+                //establish the connection
+                SqlConnection connection = new SqlConnection(connectionString);
 
-                //use serialisation to store the case information
-                SerialiseToXML(cCaseInfo);
+                //create the command
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "AddCase";
+                command.CommandType = CommandType.StoredProcedure;
 
-                //inform user that case was saved
-                MessageBox.Show("Case added successfully", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //ensure that all fields are filled in before saving the information
+                if (txtCaseNumber.Text != null || txtAccName.Text != null || txtAccSurname.Text != null || txtCharge != null || txtIO != null || txtMASNumber != null || txtPostponementReason != null || chbCasePostponed != null || dtpFirstAppearnce.Checked == true)
+                {
+                    //convert case number and mas number into int
+                    if (int.TryParse(txtCaseNumber.Text, out int iCaseNumber) && int.TryParse(txtMASNumber.Text, out int iMASNumber))
+                    {
+                        //add case info to the stored procedure for postponed case
+                        if (chbCasePostponed.Checked == true && dtpPostponement.Checked == true && txtPostponementReason != null)
+                        {
+                            command.Parameters.AddWithValue("@CaseNumber", iCaseNumber);
+                            command.Parameters.AddWithValue("@MASNumber", iMASNumber);
+                            command.Parameters.AddWithValue("@accusedName", txtAccName.Text);
+                            command.Parameters.AddWithValue("@accusedSurname", txtAccSurname.Text);
+                            command.Parameters.AddWithValue("@investigatingOfficerSurname", txtIO.Text);
+                            command.Parameters.AddWithValue("@firstAppearanceDate", dtpFirstAppearnce.Value);
+                            command.Parameters.AddWithValue("@accusedCharge", txtCharge.Text);
+                            command.Parameters.AddWithValue("@postponementReason", txtPostponementReason.Text);
+                            command.Parameters.AddWithValue("@postponementDate", dtpPostponement.Value);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@CaseNumber", iCaseNumber);
+                            command.Parameters.AddWithValue("@MASNumber", iMASNumber);
+                            command.Parameters.AddWithValue("@accusedName", txtAccName.Text);
+                            command.Parameters.AddWithValue("@accusedSurname", txtAccSurname.Text);
+                            command.Parameters.AddWithValue("@investigatingOfficerSurname", txtIO.Text);
+                            command.Parameters.AddWithValue("@firstAppearanceDate", dtpFirstAppearnce.Value);
+                            command.Parameters.AddWithValue("@accusedCharge", txtCharge.Text);
+                        }
+
+                    }
+                    else
+                    {
+                        //inform user invalid case and mas number
+                        MessageBox.Show("Invalid Case Number and/or MAS Number", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    
+                    //execute command
+                    connection.Open();
+                    int iRowsAffected = command.ExecuteNonQuery();
+                    connection.Close();
+
+                    if (iRowsAffected > 0)
+                    {
+                        //inform user that case was saved
+                        MessageBox.Show("Case added successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        //inform user that case was not saved
+                        MessageBox.Show("Case not saved", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                   
+                }
+                else
+                {
+                    //inform user that fields are empty
+                    MessageBox.Show("Empty Field(s)", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception error)
             {
-                //inform user that fields are empty
-                MessageBox.Show("Empty Field(s)", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //inform user that there is an error somewhere
+                MessageBox.Show(error.Message.ToString(), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
             }
+            
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -67,21 +114,11 @@ namespace CaseFlowUI
             txtMASNumber.Clear();
             txtCharge.Clear();
             txtCaseNumber.Clear();
-            txtAccused.Clear();
+            txtAccName.Clear();
             dtpFirstAppearnce.Value = DateTime.Today;
             dtpPostponement.Value = DateTime.Today;
         }
 
-        private void SerialiseToXML(CCaseInfoContainer _cCaseInfo)
-        {
-            
-            FileStream fs = new FileStream(@"C:\C# files\CaseFlowUI\CaseFlowUI\CaseInformation.xml", FileMode.Create);
-            XmlSerializer serializer = new XmlSerializer(typeof(CCaseInfoContainer));
-            serializer.Serialize(fs, _cCaseInfo);
-
-            //close filestream
-            fs.Close();
-            fs.Dispose();
-        }
+        
     }
 }
