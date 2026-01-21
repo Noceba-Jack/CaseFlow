@@ -21,7 +21,14 @@ namespace CaseFlowUI
         {
             InitializeComponent();
         }//constructor
-        
+
+        //test value to see if date was selected
+        Nullable<DateTime> selectedDate = null;//DateTime is not nullable by default
+        private void dtpFirstAppearnce_ValueChanged(object sender, EventArgs e)
+        {
+            selectedDate = dtpFirstAppearnce.Value;
+        }
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
             try
@@ -35,18 +42,22 @@ namespace CaseFlowUI
                 //create the command
                 SqlCommand command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "AddCase";
-                command.CommandType = CommandType.StoredProcedure;
+                
 
                 //ensure that all fields are filled in before saving the information
-                if (txtCaseNumber.Text != null || txtAccName.Text != null || txtAccSurname.Text != null || txtCharge != null || txtIO != null || txtMASNumber != null || txtPostponementReason != null || chbCasePostponed != null || dtpFirstAppearnce.Checked == true)
+                if (!string.IsNullOrWhiteSpace(txtCaseNumber.Text) && !string.IsNullOrWhiteSpace(txtAccName.Text) && !string.IsNullOrWhiteSpace(txtAccSurname.Text) && !string.IsNullOrWhiteSpace(txtCharge.Text) && !string.IsNullOrWhiteSpace(txtIO.Text) && !string.IsNullOrWhiteSpace(txtMASNumber.Text) && selectedDate.HasValue)
                 {
                     //convert case number and mas number into int
                     if (int.TryParse(txtCaseNumber.Text, out int iCaseNumber) && int.TryParse(txtMASNumber.Text, out int iMASNumber))
                     {
                         //add case info to the stored procedure for postponed case
-                        if (chbCasePostponed.Checked == true && dtpPostponement.Checked == true && txtPostponementReason != null)
+                        if ((chbCasePostponed.Checked == true) && (dtpPostponement.Checked == true) && (txtPostponementReason != null))
                         {
+                            //stored procedure for postponed case
+                            //command.CommandText = "AddCase";
+                            //command.CommandType = CommandType.StoredProcedure;
+
+                            //add parameters to stored procedure
                             command.Parameters.AddWithValue("@CaseNumber", iCaseNumber);
                             command.Parameters.AddWithValue("@MASNumber", iMASNumber);
                             command.Parameters.AddWithValue("@accusedName", txtAccName.Text);
@@ -59,6 +70,11 @@ namespace CaseFlowUI
                         }
                         else
                         {
+                            //stored procedure for normal case
+                            command.CommandText = "AddCase";
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            //add parameters to stored procedure
                             command.Parameters.AddWithValue("@CaseNumber", iCaseNumber);
                             command.Parameters.AddWithValue("@MASNumber", iMASNumber);
                             command.Parameters.AddWithValue("@accusedName", txtAccName.Text);
@@ -95,7 +111,7 @@ namespace CaseFlowUI
                 else
                 {
                     //inform user that fields are empty
-                    MessageBox.Show("Empty Field(s)", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Empty Field(s) or Date Not Selected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception error)

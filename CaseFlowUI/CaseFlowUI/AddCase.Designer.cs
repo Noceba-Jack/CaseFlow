@@ -204,6 +204,7 @@ namespace CaseFlowUI
             this.dtpFirstAppearnce.Name = "dtpFirstAppearnce";
             this.dtpFirstAppearnce.Size = new System.Drawing.Size(385, 30);
             this.dtpFirstAppearnce.TabIndex = 14;
+            this.dtpFirstAppearnce.ValueChanged += new System.EventHandler(this.dtpFirstAppearnce_ValueChanged);
             // 
             // dtpPostponement
             // 
